@@ -44,12 +44,12 @@
 
 - (void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController
 {
-    
+    [_multipeerManager.browser dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController
 {
-    
+    [_multipeerManager.browser dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -  UITableViewDelegate Methods
@@ -71,7 +71,7 @@
 - (IBAction)onBrowseDevicePressed:(UIButton *)sender
 {
     [_multipeerManager setupMCBrowser];
-    [_multipeerManager browser].delegate = self;
+    _multipeerManager.browser.delegate = self;
     [self presentViewController:[_multipeerManager browser] animated:YES completion:nil];
 }
 
