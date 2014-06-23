@@ -7,6 +7,10 @@
 //
 
 #import "MultipeerManager.h"
+@interface MultipeerManager ()
+@property (nonatomic)NSString* sessionType;
+@end
+
 
 @implementation MultipeerManager
 
@@ -19,6 +23,7 @@
         _session =  nil;
         _browser = nil;
         _advertisier = nil;
+        _sessionType = @"chat-files";
     }
     
     return self;
@@ -28,17 +33,31 @@
 #pragma mark - Custom Methods
 - (void)setupPeerAndSessionWithDisplayName:(NSString*)displayName
 {
-    
+    _peerId = [[MCPeerID alloc]initWithDisplayName:displayName];
+    _session = [[MCSession alloc]initWithPeer:_peerId];
+    _session.delegate = self;
 }
 
+/*
+ * Use Apple's default peer browser view controller
+ */
 - (void)setupMCBrowser
 {
-    
+    _browser = [[MCBrowserViewController alloc]initWithServiceType:_sessionType session:_session];
 }
 
 - (void)advertiseSelf:(BOOL)shouldAdvertise
 {
-    
+    if (shouldAdvertise)
+    {
+        _advertisier = [[MCAdvertiserAssistant alloc]initWithServiceType:_sessionType discoveryInfo:nil session:_session];
+        [_advertisier start];
+    }
+    else
+    {
+        [_advertisier stop];
+        _advertisier = nil;
+    }
 }
 
 #pragma MCSessionDelegate Methods
