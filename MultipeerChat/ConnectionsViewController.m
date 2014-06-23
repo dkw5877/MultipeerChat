@@ -7,13 +7,16 @@
 //
 
 #import "ConnectionsViewController.h"
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import "MultipeerManager.h"
 
-@interface ConnectionsViewController () <UITableViewDataSource, UITableViewDelegate >
+@interface ConnectionsViewController () <UITableViewDataSource, UITableViewDelegate, MCBrowserViewControllerDelegate >
 @property (weak, nonatomic) IBOutlet UITextField *deviceDisplayNameTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *visibleSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *browseDevicesButton;
 @property (weak, nonatomic) IBOutlet UIButton *disconnectButton;
 @property (weak, nonatomic) IBOutlet UITableView *connectedDevicesTableView;
+@property (nonatomic) MultipeerManager* multipeerManager;
 
 @end
 
@@ -31,9 +34,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+     _multipeerManager = [MultipeerManager sharedInstance];
+    [_multipeerManager setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
+    [_multipeerManager advertiseSelf:_visibleSwitch.on];
 }
 
+
+#pragma mark - MCBrowserViewControllerDelegate Methods
+
+- (void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController
+{
+    
+}
+
+- (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController
+{
+    
+}
+
+#pragma mark -  UITableViewDelegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 0;
@@ -51,7 +70,9 @@
 
 - (IBAction)onBrowseDevicePressed:(UIButton *)sender
 {
-    
+    [_multipeerManager setupMCBrowser];
+    [_multipeerManager browser].delegate = self;
+    [self presentViewController:[_multipeerManager browser] animated:YES completion:nil];
 }
 
 - (IBAction)onDisconnectPressed:(UIButton *)sender

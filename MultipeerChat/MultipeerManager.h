@@ -11,6 +11,11 @@
 
 @interface MultipeerManager : NSObject < MCSessionDelegate >
 
++ (MultipeerManager*)sharedInstance;
+- (void)setupPeerAndSessionWithDisplayName:(NSString*)displayName;
+- (void)setupMCBrowser;
+- (void)advertiseSelf:(BOOL)shouldAdvertise;
+
 @property (nonatomic)MCPeerID* peerId;
 @property (nonatomic)MCSession* session;
 @property (nonatomic)MCBrowserViewController* browser;

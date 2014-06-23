@@ -7,10 +7,12 @@
 //
 
 #import "MultipeerManager.h"
-@interface MultipeerManager ()
-@property (nonatomic)NSString* sessionType;
-@end
 
+@interface MultipeerManager ()
+
+@property (nonatomic)NSString* sessionType;
+
+@end
 
 @implementation MultipeerManager
 
@@ -29,6 +31,21 @@
     return self;
 }
 
+
++ (MultipeerManager*)sharedInstance
+{
+    static id sharedInstance;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (!sharedInstance)
+        {
+            sharedInstance = [[self alloc]init];
+        }
+    });
+    
+    return sharedInstance;
+}
 
 #pragma mark - Custom Methods
 - (void)setupPeerAndSessionWithDisplayName:(NSString*)displayName
