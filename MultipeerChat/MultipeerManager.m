@@ -81,7 +81,9 @@
 
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
 {
-    
+    //post a notification when the state changes
+    NSDictionary* stateDetail = @{@"peer": peerID, @"state": [NSNumber numberWithInt:state]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidChangeStateNotification" object:nil userInfo:stateDetail];
 }
 
 

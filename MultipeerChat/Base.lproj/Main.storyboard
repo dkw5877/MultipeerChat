@@ -94,6 +94,16 @@
                                 <rect key="frame" x="20" y="130" width="287" height="346"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="connectedDeviceId" rowHeight="60" id="oZ9-Ae-nXd">
+                                        <rect key="frame" x="0.0" y="22" width="287" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oZ9-Ae-nXd" id="WRn-j7-edK">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="cn6-5K-gXr" id="yjw-xY-5bM"/>
                                     <outlet property="delegate" destination="cn6-5K-gXr" id="6mc-lG-FE9"/>

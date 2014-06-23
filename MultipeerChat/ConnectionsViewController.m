@@ -10,12 +10,14 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "MultipeerManager.h"
 
-@interface ConnectionsViewController () <UITableViewDataSource, UITableViewDelegate, MCBrowserViewControllerDelegate >
+@interface ConnectionsViewController () <UITableViewDataSource, UITableViewDelegate, MCBrowserViewControllerDelegate, UITextFieldDelegate >
 @property (weak, nonatomic) IBOutlet UITextField *deviceDisplayNameTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *visibleSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *browseDevicesButton;
 @property (weak, nonatomic) IBOutlet UIButton *disconnectButton;
 @property (weak, nonatomic) IBOutlet UITableView *connectedDevicesTableView;
+
+@property (nonatomic)NSMutableArray* connectDevices;
 @property (nonatomic) MultipeerManager* multipeerManager;
 
 @end
@@ -34,9 +36,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _connectDevices = [NSMutableArray new];
+    
+    _deviceDisplayNameTextField.delegate = self;
      _multipeerManager = [MultipeerManager sharedInstance];
     [_multipeerManager setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
     [_multipeerManager advertiseSelf:_visibleSwitch.on];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil];
 }
 
 
@@ -55,19 +62,84 @@
 #pragma mark -  UITableViewDelegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return _connectDevices.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = nil;
+    static NSString* cellIdentifier = @"connectedDeviceId";
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.textLabel.text = _connectDevices[indexPath.row];
     return cell;
 }
 
 
+#pragma mark - UITextFieldDelegate methods
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_deviceDisplayNameTextField resignFirstResponder];
+    
+    //reset the manager properties
+    _multipeerManager.peerId = nil;
+    _multipeerManager.session = nil;
+    _multipeerManager.browser = nil;
+    
+    //if we are advertising stop
+    if (_visibleSwitch.on)
+    {
+        [_multipeerManager.advertisier stop];
+        [_multipeerManager advertiseSelf:NO];
+    }
+    
+    _multipeerManager.advertisier = nil;
+    
+    //
+    [_multipeerManager setupPeerAndSessionWithDisplayName:_deviceDisplayNameTextField.text];
+    [_multipeerManager advertiseSelf:_visibleSwitch.on];
+    [_multipeerManager setupMCBrowser];
+    
+    
+    return YES;
+}
+
+
+#pragma mark -  MultipeerManagerNoitifcation Methods
+
+- (void)peerDidChangeStateWithNotification:(NSNotification*)notificaton
+{
+    MCPeerID* peerID = [notificaton userInfo][@"peer"];
+    MCSessionState state = [[notificaton userInfo][@"state"]intValue];
+    
+    if (state != MCSessionStateConnecting)
+    {
+        if (state == MCSessionStateConnected)
+        {
+            [_connectDevices addObject:peerID.displayName];
+            
+        }
+        else if (state == MCSessionStateNotConnected)
+        {
+            if (_connectDevices.count > 0)
+            {
+//                int index = [_connectDevices indexOfObject:peerID.displayName];
+//                [_connectDevices removeObjectAtIndex:index];
+                [_connectDevices removeObjectIdenticalTo:peerID.displayName];
+            }
+        }
+        
+        //reload table
+        [_connectedDevicesTableView reloadData];
+        
+        //check if any peers are connected, set the button status based on existence of peers
+        BOOL peerExists = _multipeerManager.session.connectedPeers.count == 0;
+        _deviceDisplayNameTextField.enabled = peerExists;
+        _disconnectButton.enabled = !peerExists;
+        
+    }
+
+}
+
 #pragma mark - IBAction Methods
-
-
 - (IBAction)onBrowseDevicePressed:(UIButton *)sender
 {
     [_multipeerManager setupMCBrowser];
@@ -77,24 +149,17 @@
 
 - (IBAction)onDisconnectPressed:(UIButton *)sender
 {
-    
+    [_multipeerManager.session disconnect];
+    [_connectDevices removeAllObjects];
+    [_connectedDevicesTableView reloadData];
+    _deviceDisplayNameTextField.enabled = true;
+
 }
 
 - (IBAction)toggleVisibility:(UISwitch *)sender
 {
-    
+    [_multipeerManager advertiseSelf:_visibleSwitch.on];
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
