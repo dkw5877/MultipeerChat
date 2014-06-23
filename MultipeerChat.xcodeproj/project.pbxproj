@@ -23,6 +23,7 @@
 		CE3BF80119588201004CBF33 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE3BF7FF19588201004CBF33 /* InfoPlist.strings */; };
 		CE3BF80319588201004CBF33 /* MultipeerChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF80219588201004CBF33 /* MultipeerChatTests.m */; };
 		CE3BF80E19588299004CBF33 /* ConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF80D19588299004CBF33 /* ConnectionsViewController.m */; };
+		CE3BF81119588BBF004CBF33 /* MultipeerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF81019588BBF004CBF33 /* MultipeerManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		CE3BF80219588201004CBF33 /* MultipeerChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultipeerChatTests.m; sourceTree = "<group>"; };
 		CE3BF80C19588299004CBF33 /* ConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsViewController.h; sourceTree = "<group>"; };
 		CE3BF80D19588299004CBF33 /* ConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsViewController.m; sourceTree = "<group>"; };
+		CE3BF80F19588BBF004CBF33 /* MultipeerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipeerManager.h; sourceTree = "<group>"; };
+		CE3BF81019588BBF004CBF33 /* MultipeerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipeerManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 			children = (
 				CE3BF7E319588201004CBF33 /* AppDelegate.h */,
 				CE3BF7E419588201004CBF33 /* AppDelegate.m */,
+				CE3BF80F19588BBF004CBF33 /* MultipeerManager.h */,
+				CE3BF81019588BBF004CBF33 /* MultipeerManager.m */,
 				CE3BF7E619588201004CBF33 /* Main.storyboard */,
 				CE3BF7E919588201004CBF33 /* ChatBoxViewController.h */,
 				CE3BF7EA19588201004CBF33 /* ChatBoxViewController.m */,
@@ -262,6 +267,7 @@
 				CE3BF80E19588299004CBF33 /* ConnectionsViewController.m in Sources */,
 				CE3BF7EE19588201004CBF33 /* FileShareViewController.m in Sources */,
 				CE3BF7E519588201004CBF33 /* AppDelegate.m in Sources */,
+				CE3BF81119588BBF004CBF33 /* MultipeerManager.m in Sources */,
 				CE3BF7EB19588201004CBF33 /* ChatBoxViewController.m in Sources */,
 				CE3BF7E119588201004CBF33 /* main.m in Sources */,
 			);
