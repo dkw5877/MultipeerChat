@@ -8,7 +8,12 @@
 
 #import "ConnectionsViewController.h"
 
-@interface ConnectionsViewController ()
+@interface ConnectionsViewController () <UITableViewDataSource, UITableViewDelegate >
+@property (weak, nonatomic) IBOutlet UITextField *deviceDisplayNameTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *visibleSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *browseDevicesButton;
+@property (weak, nonatomic) IBOutlet UIButton *disconnectButton;
+@property (weak, nonatomic) IBOutlet UITableView *connectedDevicesTableView;
 
 @end
 
@@ -29,11 +34,36 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    return 0;
 }
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = nil;
+    return cell;
+}
+
+
+#pragma mark - IBAction Methods
+
+
+- (IBAction)onBrowseDevicePressed:(UIButton *)sender
+{
+    
+}
+
+- (IBAction)onDisconnectPressed:(UIButton *)sender
+{
+    
+}
+
+- (IBAction)toggleVisibility:(UISwitch *)sender
+{
+    
+}
+
 
 /*
 #pragma mark - Navigation

@@ -14,8 +14,8 @@
 		CE3BF7E119588201004CBF33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF7E019588201004CBF33 /* main.m */; };
 		CE3BF7E519588201004CBF33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF7E419588201004CBF33 /* AppDelegate.m */; };
 		CE3BF7E819588201004CBF33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3BF7E619588201004CBF33 /* Main.storyboard */; };
-		CE3BF7EB19588201004CBF33 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF7EA19588201004CBF33 /* FirstViewController.m */; };
-		CE3BF7EE19588201004CBF33 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF7ED19588201004CBF33 /* SecondViewController.m */; };
+		CE3BF7EB19588201004CBF33 /* ChatBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF7EA19588201004CBF33 /* ChatBoxViewController.m */; };
+		CE3BF7EE19588201004CBF33 /* FileShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF7ED19588201004CBF33 /* FileShareViewController.m */; };
 		CE3BF7F019588201004CBF33 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE3BF7EF19588201004CBF33 /* Images.xcassets */; };
 		CE3BF7F719588201004CBF33 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3BF7F619588201004CBF33 /* XCTest.framework */; };
 		CE3BF7F819588201004CBF33 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3BF7D419588201004CBF33 /* Foundation.framework */; };
@@ -47,10 +47,10 @@
 		CE3BF7E319588201004CBF33 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CE3BF7E419588201004CBF33 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CE3BF7E719588201004CBF33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		CE3BF7E919588201004CBF33 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		CE3BF7EA19588201004CBF33 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		CE3BF7EC19588201004CBF33 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		CE3BF7ED19588201004CBF33 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		CE3BF7E919588201004CBF33 /* ChatBoxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatBoxViewController.h; sourceTree = "<group>"; };
+		CE3BF7EA19588201004CBF33 /* ChatBoxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatBoxViewController.m; sourceTree = "<group>"; };
+		CE3BF7EC19588201004CBF33 /* FileShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileShareViewController.h; sourceTree = "<group>"; };
+		CE3BF7ED19588201004CBF33 /* FileShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileShareViewController.m; sourceTree = "<group>"; };
 		CE3BF7EF19588201004CBF33 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CE3BF7F519588201004CBF33 /* MultipeerChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MultipeerChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3BF7F619588201004CBF33 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -121,10 +121,10 @@
 				CE3BF7E319588201004CBF33 /* AppDelegate.h */,
 				CE3BF7E419588201004CBF33 /* AppDelegate.m */,
 				CE3BF7E619588201004CBF33 /* Main.storyboard */,
-				CE3BF7E919588201004CBF33 /* FirstViewController.h */,
-				CE3BF7EA19588201004CBF33 /* FirstViewController.m */,
-				CE3BF7EC19588201004CBF33 /* SecondViewController.h */,
-				CE3BF7ED19588201004CBF33 /* SecondViewController.m */,
+				CE3BF7E919588201004CBF33 /* ChatBoxViewController.h */,
+				CE3BF7EA19588201004CBF33 /* ChatBoxViewController.m */,
+				CE3BF7EC19588201004CBF33 /* FileShareViewController.h */,
+				CE3BF7ED19588201004CBF33 /* FileShareViewController.m */,
 				CE3BF80C19588299004CBF33 /* ConnectionsViewController.h */,
 				CE3BF80D19588299004CBF33 /* ConnectionsViewController.m */,
 				CE3BF7EF19588201004CBF33 /* Images.xcassets */,
@@ -260,9 +260,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE3BF80E19588299004CBF33 /* ConnectionsViewController.m in Sources */,
-				CE3BF7EE19588201004CBF33 /* SecondViewController.m in Sources */,
+				CE3BF7EE19588201004CBF33 /* FileShareViewController.m in Sources */,
 				CE3BF7E519588201004CBF33 /* AppDelegate.m in Sources */,
-				CE3BF7EB19588201004CBF33 /* FirstViewController.m in Sources */,
+				CE3BF7EB19588201004CBF33 /* ChatBoxViewController.m in Sources */,
 				CE3BF7E119588201004CBF33 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
