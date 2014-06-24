@@ -107,7 +107,7 @@
 
 - (void)peerDidChangeStateWithNotification:(NSNotification*)notificaton
 {
-    MCPeerID* peerID = [notificaton userInfo][@"peer"];
+    MCPeerID* peerID = [notificaton userInfo][@"peerID"];
     MCSessionState state = [[notificaton userInfo][@"state"]intValue];
     
     if (state != MCSessionStateConnecting)

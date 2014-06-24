@@ -82,10 +82,18 @@
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
 {
     //post a notification when the state changes
-    NSDictionary* stateDetail = @{@"peer": peerID, @"state": [NSNumber numberWithInt:state]};
+    NSDictionary* stateDetail = @{@"peerID": peerID, @"state": [NSNumber numberWithInt:state]};
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidChangeStateNotification" object:nil userInfo:stateDetail];
 }
 
+
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
+{
+    //post a notification when the state changes
+    NSDictionary* stateDetail = @{@"peerID": peerID, @"data":data };
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidRecieveDataNotification" object:nil userInfo:stateDetail];
+}
 
 - (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
 {
@@ -97,10 +105,7 @@
     
 }
 
-- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
-{
-    
-}
+
 
 - (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID
 {
