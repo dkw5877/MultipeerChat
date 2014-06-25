@@ -24,6 +24,8 @@
 		CE3BF80319588201004CBF33 /* MultipeerChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF80219588201004CBF33 /* MultipeerChatTests.m */; };
 		CE3BF80E19588299004CBF33 /* ConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF80D19588299004CBF33 /* ConnectionsViewController.m */; };
 		CE3BF81119588BBF004CBF33 /* MultipeerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF81019588BBF004CBF33 /* MultipeerManager.m */; };
+		CEBDC93C195B757400911AD4 /* sample_file1.txt in Resources */ = {isa = PBXBuildFile; fileRef = CEBDC93A195B757400911AD4 /* sample_file1.txt */; };
+		CEBDC93D195B757400911AD4 /* sample_file2.txt in Resources */ = {isa = PBXBuildFile; fileRef = CEBDC93B195B757400911AD4 /* sample_file2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		CE3BF80D19588299004CBF33 /* ConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsViewController.m; sourceTree = "<group>"; };
 		CE3BF80F19588BBF004CBF33 /* MultipeerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipeerManager.h; sourceTree = "<group>"; };
 		CE3BF81019588BBF004CBF33 /* MultipeerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipeerManager.m; sourceTree = "<group>"; };
+		CEBDC93A195B757400911AD4 /* sample_file1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file1.txt; sourceTree = "<group>"; };
+		CEBDC93B195B757400911AD4 /* sample_file2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,8 @@
 		CE3BF7DB19588201004CBF33 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CEBDC93A195B757400911AD4 /* sample_file1.txt */,
+				CEBDC93B195B757400911AD4 /* sample_file2.txt */,
 				CE3BF7DC19588201004CBF33 /* MultipeerChat-Info.plist */,
 				CE3BF7DD19588201004CBF33 /* InfoPlist.strings */,
 				CE3BF7E019588201004CBF33 /* main.m */,
@@ -243,6 +249,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBDC93D195B757400911AD4 /* sample_file2.txt in Resources */,
+				CEBDC93C195B757400911AD4 /* sample_file1.txt in Resources */,
 				CE3BF7F019588201004CBF33 /* Images.xcassets in Resources */,
 				CE3BF7DF19588201004CBF33 /* InfoPlist.strings in Resources */,
 				CE3BF7E819588201004CBF33 /* Main.storyboard in Resources */,
@@ -474,6 +482,7 @@
 				CE3BF80819588201004CBF33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CE3BF80919588201004CBF33 /* Build configuration list for PBXNativeTarget "MultipeerChatTests" */ = {
 			isa = XCConfigurationList;
@@ -482,6 +491,7 @@
 				CE3BF80B19588201004CBF33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
