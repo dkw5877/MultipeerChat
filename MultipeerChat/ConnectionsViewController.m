@@ -121,8 +121,6 @@
         {
             if (_connectDevices.count > 0)
             {
-//                int index = [_connectDevices indexOfObject:peerID.displayName];
-//                [_connectDevices removeObjectAtIndex:index];
                 [_connectDevices removeObjectIdenticalTo:peerID.displayName];
             }
         }

@@ -72,6 +72,42 @@
 
 }
 
+#pragma mark - UIActionSheetDelegate Methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != [[self.multipeerManager.session connectedPeers]count])
+    {
+        NSString* filePath = [self.documentsDirectory stringByAppendingPathComponent:self.selectedFile];
+        NSString* modifiedName = [NSString stringWithFormat:@"%@ %@",self.multipeerManager.peerId.displayName, self.selectedFile];
+        NSURL* url = [NSURL URLWithString:filePath];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            NSProgress* progress = [self.multipeerManager.session sendResourceAtURL:url withName:modifiedName toPeer:[[self.multipeerManager.session connectedPeers] objectAtIndex:buttonIndex] withCompletionHandler:^(NSError *error) {
+                if (error)
+                {
+                    NSLog(@"error: %@", [error userInfo]);
+                }
+                else
+                {
+                    UIAlertView* alertView = [[UIAlertView alloc]initWithTitle:@"File Transfer" message:@"File sent successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Great!",nil];
+                    
+                    [alertView performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
+                    [self.files replaceObjectAtIndex:self.selectedRow withObject:self.selectedFile];
+                    [self.fileTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                }
+            }];
+            
+            [progress addObserver:self forKeyPath:@"fractionCompleted" options:NSKeyValueObservingOptionNew context:NULL];
+        });
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
+}
+
 #pragma mark - custom methods
 
 - (NSArray*)getAllDocDirFiles
@@ -106,7 +142,8 @@
                                                                    toPath:file1Path
                               error:&error];
         
-        if (error) {
+        if (error)
+        {
             NSLog(@"error: %@", [error userInfo]);
         }
         
@@ -114,7 +151,8 @@
                              toPath:file1Path
                               error:&error];
         
-        if (error) {
+        if (error)
+        {
             NSLog(@"error: %@", [error userInfo]);
         }
     }
