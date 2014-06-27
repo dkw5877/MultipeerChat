@@ -97,7 +97,15 @@
 
 - (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
 {
+    NSDictionary* resource = @{@"resourceName": resourceName, @"peerID":peerID, @"progress":progress};
     
+    //post a notification
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"MCdidStartReceivingResourceNotification" object:nil userInfo:resource];
+    
+    //monitor the progress of receiving resource
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [progress addObserver:self forKeyPath:@"fractionCompleted" options:NSKeyValueObservingOptionNew context:nil];
+    });
 }
 
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error
@@ -105,10 +113,15 @@
     
 }
 
-
-
 - (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID
 {
     
+}
+
+# pragma mark -  KVO related method
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    //post a progress notification
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"MCReceivingProgressNotification" object:nil userInfo:@{@"progress":(NSProgress*)object}];
 }
 @end

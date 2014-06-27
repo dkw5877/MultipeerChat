@@ -47,7 +47,9 @@
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
 
-    cell.textLabel.text = self.files[indexPath.item];
+    [(UILabel*)[cell viewWithTag:100]setText:self.files[indexPath.item]];
+    
+    //cell.textLabel.text = self.files[indexPath.item];
     return cell;
 }
 
@@ -105,7 +107,13 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    NSString* sendingMessage = [NSString stringWithFormat:@"%@ - Sending %.f%%",self.selectedFile, [(NSProgress*)object fractionCompleted] * 100];
     
+    //update the file array
+    [self.files replaceObjectAtIndex:self.selectedRow withObject:sendingMessage];
+    
+    //reload data on the main thread
+    [self.fileTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark - custom methods
