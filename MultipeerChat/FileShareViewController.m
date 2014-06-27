@@ -29,6 +29,10 @@
     [self copySampleFilesToDocumentsDirectoryIfNecessary];
     self.files = [[NSMutableArray alloc]initWithArray:[self getAllDocDirFiles]];
     [self.fileTableView reloadData];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didStartReceivingResourceWithNotification:) name:@"MCdidStartReceivingResourceNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateReceivingProgressWithNotification:) name:@"MCReceivingProgressNotification" object:nil];
 }
 
 #pragma mark - UITableViewDelegate Methods
@@ -40,16 +44,44 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"newFileCellIdentifier"];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"newFileCellIdentifier"];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
-
-    [(UILabel*)[cell viewWithTag:100]setText:self.files[indexPath.item]];
+    UITableViewCell* cell = nil;
     
-    //cell.textLabel.text = self.files[indexPath.item];
+    //check the type of entry in the array and generate the cell accordingly.
+    if ([self.files[indexPath.row] isKindOfClass:[NSString class]])
+    {
+        //create a standard table cell
+        cell = [tableView dequeueReusableCellWithIdentifier:@"CellIdentifier"];
+        
+        if (!cell)
+        {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
+        
+        //set the file name as the cell label
+        cell.textLabel.text = self.files[indexPath.row];
+        
+    }
+    else
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"newFileCellIdentifier"];
+        if (!cell)
+        {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"newFileCellIdentifier"];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
+        
+        NSDictionary* fileData = self.files[indexPath.item];
+        NSString* fileName = fileData[@"resourceName"];
+        NSString* peerID = fileData[@"peerID"];
+        NSProgress* progress = fileData[@"progress"];
+        
+        [(UILabel*)[cell viewWithTag:100]setText:fileName];
+        [(UILabel*)[cell viewWithTag:200]setText:peerID];
+        [(UIProgressView*)[cell viewWithTag:300]setProgress:progress.fractionCompleted];
+        
+    }
+    
     return cell;
 }
 
@@ -105,6 +137,8 @@
     }
 }
 
+#pragma mark -  KVO related method
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     NSString* sendingMessage = [NSString stringWithFormat:@"%@ - Sending %.f%%",self.selectedFile, [(NSProgress*)object fractionCompleted] * 100];
@@ -114,6 +148,20 @@
     
     //reload data on the main thread
     [self.fileTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+}
+
+#pragma mark -  NSNotificationCenterRelated Method
+- (void)didStartReceivingResourceWithNotification:(NSNotification*)notification
+{
+    [self.files addObject:[notification userInfo]];
+    
+    //reload the table on the main thread
+    [self.fileTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+}
+
+- (void)updateReceivingProgressWithNotification:(NSNotification*)notification
+{
+    
 }
 
 #pragma mark - custom methods
